@@ -131,7 +131,7 @@ export class NodeBase implements ExpressionNode {
 	bind() {
 		for (const key of this.keys) {
 			const value = (this as GenericEsTreeNode)[key];
-			if (value === null) continue;
+			if (value === null || value === undefined) continue;
 			if (Array.isArray(value)) {
 				for (const child of value) {
 					if (child !== null) child.bind();
@@ -170,7 +170,7 @@ export class NodeBase implements ExpressionNode {
 	hasEffects(context: HasEffectsContext): boolean {
 		for (const key of this.keys) {
 			const value = (this as GenericEsTreeNode)[key];
-			if (value === null) continue;
+			if (value === null || value === undefined) continue;
 			if (Array.isArray(value)) {
 				for (const child of value) {
 					if (child !== null && child.hasEffects(context)) return true;
@@ -200,7 +200,7 @@ export class NodeBase implements ExpressionNode {
 		this.included = true;
 		for (const key of this.keys) {
 			const value = (this as GenericEsTreeNode)[key];
-			if (value === null) continue;
+			if (value === null || value === undefined) continue;
 			if (Array.isArray(value)) {
 				for (const child of value) {
 					if (child !== null) child.include(context, includeChildrenRecursively);
@@ -265,7 +265,7 @@ export class NodeBase implements ExpressionNode {
 	render(code: MagicString, options: RenderOptions) {
 		for (const key of this.keys) {
 			const value = (this as GenericEsTreeNode)[key];
-			if (value === null) continue;
+			if (value === null || value === undefined) continue;
 			if (Array.isArray(value)) {
 				for (const child of value) {
 					if (child !== null) child.render(code, options);
